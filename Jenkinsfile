@@ -10,9 +10,9 @@ node{
     }
 
     stage('python build') {
-        steps {
+        // steps {
             sh 'python train.py'
-        }
+        // }
     }
 
     // stage('test'){
