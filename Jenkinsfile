@@ -10,17 +10,15 @@ node{
     }
 
 
-        stage('test'){
-        def myTestContainer = docker.image('node:latest')
+        stage('ml-container-test'){
+        def myTestContainer = docker.image('jupyter/scipy-notebook')
         myTestContainer.pull()
         myTestContainer.inside{
-             sh 'npm -version'
+             sh 'pip install joblib'
+             sh 'python3 train.py'
+
 
         }
-        // nodejs(nodeJSInstallationName: 'nodejs'){
-        //     sh 'npm install --only-dev'
-        //     sh 'npm test'
-        // }
     
     }
 
