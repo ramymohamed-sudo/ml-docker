@@ -11,7 +11,7 @@ node{
 
     stage('python build') {
         // steps {
-            sh 'python train.py'
+            sh 'python3 train.py'
         // }
     }
 
