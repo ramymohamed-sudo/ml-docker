@@ -32,7 +32,7 @@ node{
 
     stage('docker build/push'){
         docker.withRegistry('https://index.docker.io/v1/', 'dockerhub'){
-            def app = docker.build("ramyrr/docker-node-js-demo:${commit_id}", '.').push()
+            def app = docker.build("ramyrr/machinelearning:${commit_id}", '.').push()
         }
     }    
 
