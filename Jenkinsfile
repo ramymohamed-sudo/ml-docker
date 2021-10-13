@@ -35,14 +35,14 @@ pipeline {
     agent {
         docker {
             image 'python:latest'
-            args '-v /var/lib/python:/var/lib/python'
+            args '-v /var/jenkins_home/workspace/ml-docker:/var/lib/python'
             
         }
     }
     stages {
         stage('Build') {
             steps {
-                sh 'touch test-file.text'
+                sh 'touch test-file3.text'
             }
         }
     }
