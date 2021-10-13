@@ -18,12 +18,13 @@ node{
     }    
 
 
-    stage('run-ml-container'){
-        def myTestContainer = docker.image('ramyrr/machinelearning:latest')
-        myTestContainer.pull()
-        myTestContainer.inside{
-             sh 'python3 train.py'
+    // stage('run-ml-container'){
+    //     def myTestContainer = docker.image('ramyrr/machinelearning:latest')
+    //     myTestContainer.pull()
+    //     myTestContainer.inside{
+    //          sh 'python3 train.py'
 
-        }
+    //     }
 
-    }
+    // }
+
