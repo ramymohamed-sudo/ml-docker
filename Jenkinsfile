@@ -42,7 +42,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'python3 file.py'
+                sh 'touch test-file.text'
             }
         }
     }
