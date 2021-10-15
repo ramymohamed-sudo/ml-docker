@@ -75,8 +75,13 @@ pipeline {
 
     stage('push'){
         steps {
+        script{
+
         docker.withRegistry('https://index.docker.io/v1/', 'dockerhub'){
-            def app = docker.build("ramyrr/machinelearning:${commit_id}", '.').push()
+        def app = docker.build("ramyrr/machinelearning:${commit_id}", '.').push()
+            
+        }
+        
         }
         }
     } 
