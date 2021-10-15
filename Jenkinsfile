@@ -79,7 +79,7 @@ pipeline {
             def app = docker.build("ramyrr/machinelearning:${commit_id}", '.').push()
         }
         }
-    // } 
+    } 
 
     }
 
