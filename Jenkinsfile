@@ -41,11 +41,18 @@ pipeline {
         }
     }
     stages {
-        stage('Build') {
+    stage('Build') {
             steps {
                 sh 'pip install joblib'
                 sh 'python3 train.py'
             }
         }
     }
+
+    stage('docker build/push'){
+        docker.withRegistry('https://index.docker.io/v1/', 'dockerhub'){
+            def app = docker.build("ramyrr/machinelearning:${commit_id}", '.').push()
+        }
+    }   
+
 }
