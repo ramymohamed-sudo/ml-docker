@@ -52,6 +52,8 @@ node{
 
     stage('docker build/push'){
         docker.withRegistry('https://index.docker.io/v1/', 'dockerhub'){
+            sh 'pwd'
+            sh 'whoami'
             def app = docker.build("ramyrr/docker-node-js-demo:${commit_id}", '.').push()
         }
     }    
