@@ -34,15 +34,17 @@
 pipeline {
     agent {
         docker {
-            image 'python:latest'
-            args '-v /var/jenkins_home/workspace/ml-docker:/var/lib/python'
+            image 'jupyter/scipy-notebook'        
+            args '-v $HOME/workspace/ml-docker:/var/lib/python'
+            // args '-v /var/lib/python:/var/lib/python'
             
         }
     }
     stages {
         stage('Build') {
             steps {
-                sh 'python test-file3.text'
+                sh 'pip install joblib'
+                sh 'python3 train.py'
             }
         }
     }
