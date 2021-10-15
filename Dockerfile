@@ -1,11 +1,14 @@
 FROM jupyter/scipy-notebook
 
-RUN pip install joblib
+WORKDIR /var/lib/python
 
-COPY train.csv ./train.csv
-COPY test.csv ./test.csv
+COPY . . 
 
-COPY train.py ./train.py
-COPY inference.py ./inference.py
+RUN pip install --no-cache-dir -r requirements.txt
 
-RUN python3 train.py
+# COPY train.csv ./train.csv
+# COPY test.csv ./test.csv
+# COPY train.py ./train.py
+# COPY inference.py ./inference.py
+
+# RUN python3 train.py # this will run in the run stage in Jenkins

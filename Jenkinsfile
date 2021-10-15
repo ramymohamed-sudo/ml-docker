@@ -40,7 +40,6 @@ pipeline {
     // The agent section specifies where the entire Pipeline, or a specific stage, will execute
     // in the Jenkins environment depending on where the agent section is placed.
     agent {
-
         // docker {
         //     image 'jupyter/scipy-notebook'        
         //     args '-v $HOME/workspace/ml-docker:/var/lib/python'
@@ -54,6 +53,7 @@ pipeline {
     }
 
     stages {
+
     stage('Preparation'){
         steps {
         // checkout scm
@@ -61,13 +61,12 @@ pipeline {
         sh 'git rev-parse --short HEAD > .git/commit-id' 
         commit_id = readFile('.git/commit-id').trim()
         }
-
         }
     }
 
-    stage('Build') {
+    stage('Run') {
             steps {
-                sh 'pip install joblib'
+                // sh 'pip install joblib'
                 sh 'python3 train.py'
             }
         }
