@@ -58,13 +58,13 @@ pipeline {
             }
         }
 
-    stage('push'){
-        steps {
-        docker.withRegistry('https://index.docker.io/v1/', 'dockerhub'){
-            def app = docker.build("ramyrr/machinelearning:${commit_id}", '.').push()
-        }
-        }
-    } 
+    // stage('push'){
+    //     steps {
+    //     docker.withRegistry('https://index.docker.io/v1/', 'dockerhub'){
+    //         def app = docker.build("ramyrr/machinelearning:${commit_id}", '.').push()
+    //     }
+    //     }
+    // } 
 
     }
 
