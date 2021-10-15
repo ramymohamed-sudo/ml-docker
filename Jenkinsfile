@@ -31,12 +31,6 @@
 // }
 
 
-// agent {
-//     dockerfile {
-
-//         args '-v /etc/passwd:/etc/passwd -v /etc/group:/etc/group'
-//     }
-// }
 
 
 def commit_id
@@ -46,12 +40,17 @@ pipeline {
     // The agent section specifies where the entire Pipeline, or a specific stage, will execute
     // in the Jenkins environment depending on where the agent section is placed.
     agent {
-        docker {
-            image 'jupyter/scipy-notebook'        
-            args '-v $HOME/workspace/ml-docker:/var/lib/python'
-            // args '-v /var/lib/python:/var/lib/python'
-            
+
+        // docker {
+        //     image 'jupyter/scipy-notebook'        
+        //     args '-v $HOME/workspace/ml-docker:/var/lib/python'
+        //     // args '-v /var/lib/python:/var/lib/python'  
+        // }
+
+        dockerfile {
+        args '-v $HOME/workspace/ml-docker:/var/lib/python'
         }
+
     }
 
     stages {
@@ -78,11 +77,10 @@ pipeline {
         script{
 
 
-        docker.withRegistry('https://index.docker.io/v1/', 'dockerhub'){
-        // def app = docker.build("ramyrr/machinelearning:${commit_id}", '.').push()
-        def app = docker.build("ramyrr/docker-node-js-demo:${commit_id}", '.').push()
-            
-        }
+        // docker.withRegistry('https://index.docker.io/v1/', 'dockerhub'){
+        // // def app = docker.build("ramyrr/machinelearning:${commit_id}", '.').push()
+        // def app = docker.build("ramyrr/docker-node-js-demo:${commit_id}", '.').push()   
+        // }
 
         
         }
