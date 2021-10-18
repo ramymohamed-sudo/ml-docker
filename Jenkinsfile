@@ -12,21 +12,21 @@ node{
 
     stage('ml-container-test'){
         
-       def myTestContainer = docker.image('jupyter/scipy-notebook')
-        myTestContainer.pull()
-        myTestContainer.inside{
-             sh 'pip install joblib'
-             sh 'python3 train.py'
-
-        }
+//        def myTestContainer = docker.image('jupyter/scipy-notebook')
+//         myTestContainer.pull()
+//         myTestContainer.inside{
+//              sh 'pip install joblib'
+//              sh 'python3 train.py'
+//         }
+        def customImage = docker.build("my-image:${env.BUILD_ID}", "./")    
+        customImage.inside {
+        sh 'ls'
+        sh 'python3 train.py'
+    }
+        
 
     }
-
-    // stage('python build') {
-    //     // steps {
-    //         sh 'python3 train.py'
-    //     // }
-    // }
+    
 
     stage('docker build/push'){
         docker.withRegistry('https://index.docker.io/v1/', 'dockerhub'){
@@ -34,6 +34,9 @@ node{
         }
     }    
 
+    
+}
+    
 // to be completed below https://www.youtube.com/watch?v=gdbA3vR2eDs
 //     stage('run-container-on-analytical-server'){
 //         def myTestContainer = docker.image('jupyter/scipy-notebook')
@@ -43,4 +46,3 @@ node{
 
 //         }
 
-}
