@@ -3,6 +3,10 @@
 # train.py
 # Xavier Vasques 13/04/2021
 
+# https://towardsdatascience.com/build-and-run-a-docker-container-for-your-machine-learning-model-60209c2d7a7f
+# https://gist.github.com/xaviervasques
+
+
 import platform; print(platform.platform())
 import sys; print("Python", sys.version)
 import numpy; print("NumPy", numpy.__version__)
@@ -49,6 +53,10 @@ def train():
     # Save model
     from joblib import dump
     dump(clf_NN, 'Inference_NN.joblib')
+
+
+    for i in range(10):
+        print(f"i: {i}")
         
 if __name__ == '__main__':
     train()
