@@ -11,7 +11,8 @@ node{
 
 
     stage('ml-container-test'){
-        def myTestContainer = docker.image('jupyter/scipy-notebook')
+        
+       def myTestContainer = docker.image('jupyter/scipy-notebook')
         myTestContainer.pull()
         myTestContainer.inside{
              sh 'pip install joblib'
