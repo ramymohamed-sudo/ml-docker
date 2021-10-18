@@ -23,25 +23,18 @@ node{
         sh 'ls'
         sh 'python3 train.py'
     }
+        customImage.push()
         
 
     }
     
 
-    stage('docker build/push'){
-        docker.withRegistry('https://index.docker.io/v1/', 'dockerhub'){
-            def app = docker.build("ramyrr/machinelearning:${commit_id}", '.').push()
-        }
-    }    
+    // stage('docker build/push'){
+    //     docker.withRegistry('https://index.docker.io/v1/', 'dockerhub'){
+    //         def app = docker.build("ramyrr/machinelearning:${commit_id}", '.').push()
+    //     }
+    // }    
 
     
 }
     
-// to be completed below https://www.youtube.com/watch?v=gdbA3vR2eDs
-//     stage('run-container-on-analytical-server'){
-//         def myTestContainer = docker.image('jupyter/scipy-notebook')
-//         myTestContainer.pull()
-//         myTestContainer.inside{
-//              sh 'docker run -p 5667:5667 -d -name my-ml-app ramyrr/machinelearning:${commit_id}'
-
-//         }
