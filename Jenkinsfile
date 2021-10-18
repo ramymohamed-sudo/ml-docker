@@ -9,8 +9,6 @@ node{
         commit_id = readFile('.git/commit-id').trim()
     }
 
-    // def customImage = docker.build("my-image:${env.BUILD_ID}", "./")    // pass directory
-    def customImage = docker.build("my-image:${env.BUILD_ID}", "./")    // --volume $HOME/workspace/ml-docker:/var/lib/python
 
     stage('ml-container-test'){
         
@@ -25,21 +23,6 @@ node{
         sh 'ls'
         sh 'python3 train.py'
     }
-<<<<<<< HEAD
-
-    docker.withRegistry('https://index.docker.io/v1/', 'dockerhub'){
-        customImage.push()
-
-    }
-
-    
-}
-
-
-
-
-        
-=======
         
 
     }
@@ -62,5 +45,3 @@ node{
 //              sh 'docker run -p 5667:5667 -d -name my-ml-app ramyrr/machinelearning:${commit_id}'
 
 //         }
-
->>>>>>> ce7d8e1e5fc40c68aa06faaf57cbe68b97ff0d4f
