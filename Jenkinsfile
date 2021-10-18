@@ -36,24 +36,17 @@
 // }
 
 
-
 node {
     checkout scm
 
     docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
 
         def customImage = docker.build("my-image:${env.BUILD_ID}", "./")
-        
-        customImage.inside {
-        sh 'ls'
-        sh 'python3 train.py'
-    }
 
         /* Push the container to the custom Registry */
         customImage.push()
     }
 }
-
 
 
 
