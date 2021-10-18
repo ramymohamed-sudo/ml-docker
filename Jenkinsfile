@@ -6,7 +6,7 @@ node {
     checkout scm
 
     // def customImage = docker.build("my-image:${env.BUILD_ID}", "./")    // pass directory
-    def customImage = docker.build("my-image:${env.BUILD_ID}", "--volume $HOME/workspace/ml-docker:/var/lib/python ./")    // pass directory
+    def customImage = docker.build("my-image:${env.BUILD_ID}", "./")    // --volume $HOME/workspace/ml-docker:/var/lib/python 
 
     customImage.inside {
         sh 'ls'
