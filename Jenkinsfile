@@ -18,7 +18,7 @@ node{
 //              sh 'pip install joblib'
 //              sh 'python3 train.py'
 //         }
-        def customImage = docker.build("my-image:${env.BUILD_ID}", "./")    
+        customImage = docker.build("my-image:${env.BUILD_ID}", "./")    
         customImage.inside {
         sh 'ls'
         sh 'python3 train.py'
