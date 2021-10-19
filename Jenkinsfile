@@ -11,28 +11,37 @@ node{
     }
 
 
-    stage('ml-container-test'){
-        
+    stage('Build'){
+
+// Build from image        
 //        def myTestContainer = docker.image('jupyter/scipy-notebook')
 //         myTestContainer.pull()
 //         myTestContainer.inside{
 //              sh 'pip install joblib'
 //              sh 'python3 train.py'
 //         }
-        // customImage = docker.build("my-image:${env.BUILD_ID}", "./")    // from Dockerfile in "./"
+
+        // Build from Dockerfile  // from Dockerfile in "./"
+        // customImage = docker.build("my-image:${env.BUILD_ID}", "./")    
         customImage = docker.build("ramyrr/machinelearning:${commit_id}", "./")
+       
+    }
+    
+    stage('Run'){
+        
         customImage.inside {
         sh 'ls'
         sh 'python3 train.py'
     }
-       
-    }
-    
 
-    stage('docker build/push'){
+    }
+
+
+    stage('Push'){
         docker.withRegistry('https://index.docker.io/v1/', 'dockerhub'){
             // def app = docker.build("ramyrr/machinelearning:${commit_id}", '.').push()
             customImage.push()
+
         }
     }    
 
