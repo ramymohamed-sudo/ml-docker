@@ -19,21 +19,20 @@ node{
 //              sh 'pip install joblib'
 //              sh 'python3 train.py'
 //         }
-        customImage = docker.build("my-image:${env.BUILD_ID}", "./")    
+        // customImage = docker.build("my-image:${env.BUILD_ID}", "./")    // from Dockerfile in "./"
+        customImage = docker.build("ramyrr/machinelearning:${commit_id}", "./")
         customImage.inside {
         sh 'ls'
         sh 'python3 train.py'
     }
        
-        
-
     }
     
 
     stage('docker build/push'){
         docker.withRegistry('https://index.docker.io/v1/', 'dockerhub'){
-            def app = docker.build("ramyrr/machinelearning:${commit_id}", '.').push()
-            // customImage.push()
+            // def app = docker.build("ramyrr/machinelearning:${commit_id}", '.').push()
+            customImage.push()
         }
     }    
 
