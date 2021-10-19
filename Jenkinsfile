@@ -23,7 +23,7 @@ node{
         sh 'ls'
         sh 'python3 train.py'
     }
-        customImage.push()
+        // customImage.push()
         
 
     }
