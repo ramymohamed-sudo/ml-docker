@@ -2,6 +2,7 @@
 node{
 
     def commit_id 
+    def customImage
 
     stage('Preparation'){
         checkout scm
