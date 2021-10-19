@@ -29,7 +29,7 @@ node{
         
         customImage.inside {
         sh 'ls'
-        sh 'python3 train.py'
+        // sh 'python3 train.py'
         
     }
     }
