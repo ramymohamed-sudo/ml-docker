@@ -10,7 +10,7 @@ from keras.layers import LSTM, Dense, Dropout
 from load_data import *
 
 
-epochs = 10000   # 10000
+epochs = 1000   # 10000
 
 
 df_train = load_train_data()
@@ -41,8 +41,7 @@ history = model.fit(train_X.reshape(dim1, dim2, dim3),
                     validation_split=0.1, verbose=2, shuffle=True)
 print(model.summary())
 
-sys.exit()
-# Epoch 10/10
+
 
 
 # plot history
