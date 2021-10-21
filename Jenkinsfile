@@ -1,4 +1,6 @@
 
+https://www.jenkins.io/doc/book/pipeline/
+
 node{
 
     def commit_id 
@@ -29,6 +31,7 @@ node{
         
         customImage.inside {
         sh 'ls'
+        sh 'echo Hello keras_lstm'
         sh 'python3 ./models/keras_lstm.py'
         
     }

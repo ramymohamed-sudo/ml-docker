@@ -23,7 +23,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 start_time = datetime.datetime.now()
 RUL_cap = 130
 
-file_path = './CMAPSSData/'
+file_path = './models/CMAPSSData/'
 train_file = 'train_FD001.txt'
 test_file = 'test_FD001.txt'
 rul_file = 'RUL_FD001.txt'

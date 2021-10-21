@@ -9,7 +9,6 @@ node{
         commit_id = readFile('.git/commit-id').trim()
     }
 
-
     stage('ml-container-test'){
         def myTestContainer = docker.image('jupyter/scipy-notebook')
         myTestContainer.pull()
