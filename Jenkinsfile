@@ -29,7 +29,7 @@ node{
         
         customImage.inside {
         sh 'ls'
-        sh 'python3 keras_lstm.py'
+        sh 'python3 ./models/keras_lstm.py'
         
     }
     }

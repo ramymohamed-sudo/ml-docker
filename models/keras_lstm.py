@@ -83,6 +83,7 @@ model.save(f'kera_lstm_w_scale_epochs_{epochs}.h5')  # creates a HDF5 file 'my_m
 
 
 sys.exit()
+
 # reshape input to be 3D [samples, timesteps, features]
 
 # make a prediction
