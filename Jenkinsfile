@@ -20,30 +20,31 @@ node{
 //              sh 'python3 train.py'
 //         }
 
-        // Build from Dockerfile  // from Dockerfile in "./"
-        // customImage = docker.build("my-image:${env.BUILD_ID}", "./")    
-        customImage = docker.build("ramyrr/machinelearning:${commit_id}", "./")  
+    // Build from Dockerfile  // from Dockerfile in "./"
+    // customImage = docker.build("my-image:${env.BUILD_ID}", "./")    
+    customImage = docker.build("ramyrr/machinelearning:${commit_id}", "./models/")  
     }
     
     stage('Run'){
         
         customImage.inside {
         sh 'ls'
-        // sh 'python3 train.py'
+        sh 'python3 keras_lstm.py'
         
     }
     }
 
 
-    stage('Push'){
-        sh "docker logs ${c.id}"
-        docker.withRegistry('https://index.docker.io/v1/', 'dockerhub'){
-            // def app = docker.build("ramyrr/machinelearning:${commit_id}", '.').push()
-            customImage.push()
+    // stage('Push'){
+    //     docker.withRegistry('https://index.docker.io/v1/', 'dockerhub'){
+    //         // def app = docker.build("ramyrr/machinelearning:${commit_id}", '.').push()
+    //         customImage.push()
 
-        }
-    }    
+    //     }
+    // }    
 
     
 }
     
+
+
