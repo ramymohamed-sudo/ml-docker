@@ -31,7 +31,7 @@ node{
         
         customImage.inside {
         sh 'ls'
-        sh 'echo Hello Classical Regression'
+        sh 'echo Hello LSTM Keras'
         sh 'python3 ./scripts/keras_lstm.py'
         
     }
