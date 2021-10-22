@@ -1,4 +1,4 @@
-FROM python:latest
+FROM jupyter/scipy-notebook
 
 WORKDIR /var/lib/python
 
