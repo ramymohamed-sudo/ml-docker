@@ -24,15 +24,15 @@ node{
 
     // Build from Dockerfile  // from Dockerfile in "./"
     // customImage = docker.build("my-image:${env.BUILD_ID}", "./")    
-    customImage = docker.build("ramyrr/machinelearning:${commit_id}", "./scripts/")  
+    customImage = docker.build("ramyrr/machinelearning:${commit_id}", "./classical-reg/")  
     }
     
     stage('Run'){
         
         customImage.inside {
         sh 'ls'
-        sh 'echo Hello keras_lstm'
-        sh 'python3 ./scripts/keras_lstm.py'
+        sh 'echo Hello Classical Regression'
+        sh 'python3 ./scripts/lr_rf_svr.py'
         
     }
     }
