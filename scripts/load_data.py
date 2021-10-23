@@ -23,20 +23,25 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 start_time = datetime.datetime.now()
 RUL_cap = 130
 
-file_path = './scripts/CMAPSSData/'
-train_file = 'train_FD001.txt'
-test_file = 'test_FD001.txt'
-rul_file = 'RUL_FD001.txt'
+
+model_directory='./' # directory to save model history after every epoch 
+file_path = './CMAPSSData/'
+if not ('CMAPSSData' in os.listdir(model_directory)):
+    file_path = './scripts/CMAPSSData/'
+
+train_file = file_path+'train_FD001.txt'
+test_file = file_path+'test_FD001.txt'
+rul_file = file_path+'RUL_FD001.txt'
 
 
 # convert series to supervised learning
-def series_to_supervised(data, n_in=1, n_out=1, dropnan=True):
+def series_to_supervised(data, window_size=1, n_out=1, dropnan=True):
     n_vars = 1 if type(data) is list else data.shape[1]
     # print("n_vars", n_vars)  # 18
     df = DataFrame(data)
     cols, names = list(), list()
     # input sequence (t-n, ... t-1)
-    for i in range(n_in, 0, -1):        # n_in=29 for engine no 1
+    for i in range(window_size, 0, -1):        # window_size=29 for engine no 1
         # print(f"i is {i}")
         cols.append(df.shift(i))
         # print("cols", cols)
@@ -76,7 +81,7 @@ def load_data(data_path):
 
 def load_train_data():
     """ 1. Load training data """
-    training_data = load_data(file_path+train_file)
+    training_data = load_data(train_file)
     # print("data.head():\n", training_data.head())
     # print("data.shape:\n", training_data.shape)
     # print("data.var():\n", training_data.drop(
@@ -84,7 +89,7 @@ def load_train_data():
     num_engine = max(training_data['engine_no'])
 
     """ 2. Load test data to get window_size"""
-    test_data = load_data(file_path+test_file)
+    test_data = load_data(test_file)
     max_window_size = min(test_data.groupby('engine_no')['cycle'].max())
     window_size = max_window_size - 2   # 31 - 2 =29
 
@@ -119,7 +124,7 @@ def load_train_data():
 
 
 def load_test_data():
-    test_data = load_data(file_path+test_file)
+    test_data = load_data(test_file)
     max_window_size = min(test_data.groupby('engine_no')['cycle'].max())
     window_size = max_window_size - 2   # 31 - 2 =29
     # Follow variable does not have variation, remove os3, sm1, 5, 6, 10, 16, 18, 19
@@ -127,7 +132,7 @@ def load_test_data():
         ['os3', 'sm1', 'sm5', 'sm6', 'sm10', 'sm16', 'sm18', 'sm19'], axis=1)  # FD001
     
     """ Load RUL """
-    data_RUL = pd.read_csv(file_path+rul_file,  header=None)
+    data_RUL = pd.read_csv(rul_file,  header=None)
     num_engine_t = data_RUL.shape[0]
 
     # df_t is the testing data

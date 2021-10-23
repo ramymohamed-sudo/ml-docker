@@ -9,7 +9,7 @@ from keras.models import Sequential
 from keras.layers import LSTM, Dense, Dropout
 import csv
 import os 
-from load_data import *
+from load_data_2d import *     
 
 validation_split=0.2
 epochs = 1000   # 10000
@@ -37,12 +37,12 @@ class StoreModelHistory(keras.callbacks.Callback):
       logs.setdefault('lr',0)
       logs['lr'] = K.get_value(self.model.optimizer.lr)
 
-    if not (f'model_history_keras_lstm_with_scale_epochs_{epochs}.csv' in os.listdir(model_directory)):
-      with open(model_directory+f'model_history_keras_lstm_with_scale_epochs_{epochs}.csv','a') as f:
+    if not (f'model_history_keras_lstm2d_with_scale_epochs_{epochs}.csv' in os.listdir(model_directory)):
+      with open(model_directory+f'model_history_keras_lstm2d_with_scale_epochs_{epochs}.csv','a') as f:
         y=csv.DictWriter(f,logs.keys())
         y.writeheader()
 
-    with open(model_directory+f'model_history_keras_lstm_with_scale_epochs_{epochs}.csv','a') as f:
+    with open(model_directory+f'model_history_keras_lstm2d_with_scale_epochs_{epochs}.csv','a') as f:
       y=csv.DictWriter(f,logs.keys())
       y.writerow(logs)
 
@@ -50,8 +50,9 @@ class StoreModelHistory(keras.callbacks.Callback):
 
 """ 7. Train a LSTM model """
 dim1 = train_X.shape[0]
-dim2 = 1    # for 2-D approach this value is 1
-dim3 = int(train_X.shape[1]/dim2)
+dim2 = train_X.shape[1]
+dim3 = train_X.shape[2]
+print(f" dim1 is {dim1}\n dim2 is {dim2}\n dim3 is {dim3}")
 
 tf.keras.backend.clear_session()
 model = Sequential()
@@ -108,7 +109,7 @@ print("size before and after prediction",
         train_X.shape, size_before_reshape.shape)
 yhat = model.predict(train_X.reshape(dim1, dim2, dim3))
 print("yhat: ", yhat)
-model.save(f'keras_lstm_w_scale_epochs_{epochs}.h5')  # creates a HDF5 file 'my_model.h5'
-# !tar -zcvf LSTM_model_w_scale.tgz LSTM_model_w_scale.h5
+model.save(f'keras_lstm2d_w_scale_epochs_{epochs}.h5')  # creates a HDF5 file 'my_model.h5'
+# !tar -zcvf LSTM2d_model_w_scale.tgz LSTM2d_model_w_scale.h5
 # !ls -l
 

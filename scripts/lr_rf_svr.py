@@ -6,7 +6,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
-
+from sklearn.metrics import mean_absolute_error, mean_squared_error
 
 from sklearn.linear_model import LinearRegression
 from sklearn.ensemble import RandomForestRegressor
@@ -19,6 +19,8 @@ from sklearn.metrics import classification_report, confusion_matrix, accuracy_sc
 import sys
 from sklearn.utils import shuffle
 from load_data import *
+
+test_size=0.2
 
 
 df_train = load_train_data()
@@ -33,7 +35,7 @@ test_y = df_test['Y'].values.astype('float32')
 print("before train_test_split")
 X_train, X_test, y_train, y_test = train_test_split(train_X,
                                                     train_y,
-                                                    test_size=0.2,
+                                                    test_size=test_size,
                                                     random_state=42,
                                                     shuffle=True)
 print("shape of X_train", X_train.shape)
@@ -53,13 +55,14 @@ svr_model_reg = SVR(kernel='rbf')
 
 """ Pipeline """
 reg_pipe = Pipeline([("regression", rf_model_reg)])
-
+#  for NLP Pipeline([("TF-IDF", tf_idf_model), ("regression", rf_model_reg)])
 
 model1_reg = {"regression": [linear_model_reg]}
 
 model2_reg = {"regression": [rf_model_reg],
               "regression__n_estimators": [10, 100],
               "regression__max_features": [1, 3]}
+              
 model3_reg = {"regression": [svr_model_reg],
               "regression__C": [1, 5, 10],
               "regression__gamma": ('auto', 'scale'),
@@ -79,3 +82,10 @@ for mean, params in zip(means, clf_reg.cv_results_['params']):
     print("% 0.3f for % r " % (mean, params))
 
 y_pred = clf_reg.predict(X_test)
+
+mean_abs_err = mean_absolute_error(y_test, y_pred, multioutput='uniform_average')
+
+mean_sqrd_err = mean_squared_error(y_test, y_pred, multioutput='uniform_average', squared=True)
+
+print(f"Final mean_absolute_error is {mean_abs_err}")
+print(f"Final mean_squared_error is {mean_sqrd_err}")

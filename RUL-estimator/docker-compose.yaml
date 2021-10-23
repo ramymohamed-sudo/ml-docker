@@ -1,0 +1,13 @@
+
+
+version: '3.3'
+services:
+    iot-rul-docker:
+        build: .
+        ports:
+            - 90000:90000
+        volumes:      #  docker volume create IoT-RUL and docker volume list
+            - IoT-RUL:/home/jovyan
+
+volumes:
+    IoT-RUL:
