@@ -62,7 +62,7 @@ model1_reg = {"regression": [linear_model_reg]}
 model2_reg = {"regression": [rf_model_reg],
               "regression__n_estimators": [10, 100],
               "regression__max_features": [1, 3]}
-              
+
 model3_reg = {"regression": [svr_model_reg],
               "regression__C": [1, 5, 10],
               "regression__gamma": ('auto', 'scale'),
@@ -89,3 +89,18 @@ mean_sqrd_err = mean_squared_error(y_test, y_pred, multioutput='uniform_average'
 
 print(f"Final mean_absolute_error is {mean_abs_err}")
 print(f"Final mean_squared_error is {mean_sqrd_err}")
+
+
+
+# Bar plot of MAE/RMSE measures of our proposed CBLSTMs without dropout, CLSTM and CBLSTM under
+# three different datasets: C1, C4 and C6, respectively.
+# Finally, three tool life tests named C1, C4 and C6 were selected as our dataset. Each test contains 315 data samples, while each data sample has a corresponding flank wear. 
+# For training/testing splitting, a three-fold setting is adopted such that two tests are used as the training domain and the other one is used as the testing domain. For example, when C4 and C6 are used as the training datasets, C1 will be adopted as the testing dataset. This splitting is denoted as c1.
+# Our task is defined as the prediction of tool wear depth based on the sensory input.
+# Total wear is plotted versus the number of cuts
+
+
+# Table 3. MAE for compared methods on these three datasets. Bold face indicates the best performances.
+# RNN, Recurrent Neural Network.
+
+# Table 4. RMSE for compared methods on these three datasets. Bold face indicates the best performance
