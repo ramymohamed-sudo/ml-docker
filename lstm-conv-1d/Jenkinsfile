@@ -24,7 +24,7 @@ node{
 
     // Build from Dockerfile  // from Dockerfile in "./"
     // customImage = docker.build("my-image:${env.BUILD_ID}", "./")    
-    customImage = docker.build("ramyrr/machinelearning:${commit_id}", "./lstm-conv-2d/")  
+    customImage = docker.build("ramyrr/machinelearning:${commit_id}", "./lstm-conv-1d/")  
     }
     
     stage('Run'){
