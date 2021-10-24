@@ -239,7 +239,6 @@ print("Hello here")
 sys.exit()
 
 
-
 # tf.keras.layers.Reshape(target_shape, **kwargs)
 # https://keras.io/api/layers/reshaping_layers/reshape/
 # https://keras.io/api/layers/reshaping_layers/flatten/
