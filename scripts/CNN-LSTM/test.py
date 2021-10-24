@@ -171,9 +171,7 @@ print("batch_y.shape: ", batch_y.shape)
 
 
 """ -------------- Keras | Ramy -------------- """
-model = Sequential()
-# augmentation 
-# normalization 
+model = Sequential()    # augmentation  # normalization 
 
 model.add(Conv1D(filters=18, kernel_size=2, padding='same', activation='relu'))
 model.add(MaxPooling1D(2, strides=2, padding='same'))
@@ -193,9 +191,8 @@ model.add(Flatten())
 model.add(Dense(units=sequence_length * n_channels, activation='relu'))
 model.add(Dropout(1-keep_prob))
 
-# RESHAPE before LSTM
-model.add(keras.layers.Reshape(target_shape=(-1, sequence_length, n_channels)))
-# lstm_input = tf.reshape(dence_layer_1, [-1, sequence_length, n_channels])
+# RESHAPE before LSTM --- # lstm_input = tf.reshape(dence_layer_1, [-1, sequence_length, n_channels])
+model.add(keras.layers.Reshape(target_shape=(batch_size, sequence_length, n_channels)))
 
 """ TWO TWO TWO TWO LSTM layers - check dropout and sizes and return_sequences """
 # model.add(LSTM(units=lstm_size, return_sequences=True))
@@ -209,8 +206,9 @@ model.add(Dropout(1-keep_prob))
 
 # output of the model
 model.add(Dense(units=1, activation=None))
+
 model.compile(loss='mse', optimizer='adam',
-                  metrics=['mean_absolute_error'])
+                metrics=['mean_absolute_error', 'RootMeanSquaredError'])
 
 
 no_of_batches = int(x_train.shape[0] / batch_size)
