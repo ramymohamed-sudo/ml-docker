@@ -192,14 +192,10 @@ model.add(Flatten())
 model.add(Dense(units=sequence_length * n_channels, activation='relu'))
 model.add(Dropout(1-keep_prob))
 
-for layer in model.layers:
-    print(layer.output_shape)
-
 # RESHAPE before LSTM
-model.add(keras.layers.Reshape(target_shape=(-1, sequence_length,n_channels)))
+model.add(keras.layers.Reshape(target_shape=(-1, sequence_length, n_channels)))
 # lstm_input = tf.reshape(dence_layer_1, [-1, sequence_length, n_channels])
 
-sys.exit()
 """ TWO TWO TWO TWO LSTM layers - check dropout and sizes and return_sequences """
 # model.add(LSTM(units=lstm_size, return_sequences=True))
 model.add(LSTM(units=lstm_size, return_sequences=False))
@@ -222,8 +218,6 @@ x_train_all = np.zeros((no_of_batches*batch_size, sequence_length, n_channels))
 y_train_all = np.zeros((no_of_batches*batch_size, sequence_length))
 print("x_train_all.shape", x_train_all.shape)
 print("y_train_all.shape", y_train_all.shape)
-# batch_x.shape:  (1024, 100, 24)
-# batch_y.shape:  (1024, 100)
 print("y_train_all.shape", y_train_all.shape)
 for btch in range(no_of_batches):
     batch_x, batch_y = next(training_generator)
@@ -232,7 +226,6 @@ for btch in range(no_of_batches):
 
 print("x_train_all.shape", x_train_all.shape)
 print("y_train_all.shape", y_train_all.shape)
-
 
 
 print("Training Model .....")
@@ -244,6 +237,10 @@ history = model.fit(x_train_all,
 print(model.summary())
 
 print("Hello here")
+
+for layer in model.layers:
+    print(layer.output_shape)
+
 sys.exit()
 
 
