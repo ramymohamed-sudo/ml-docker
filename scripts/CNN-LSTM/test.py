@@ -240,10 +240,10 @@ sys.exit()
 
 
 
-tf.keras.layers.Reshape(target_shape, **kwargs)
-https://keras.io/api/layers/reshaping_layers/reshape/
-https://keras.io/api/layers/reshaping_layers/flatten/
-model.output_shape
+# tf.keras.layers.Reshape(target_shape, **kwargs)
+# https://keras.io/api/layers/reshaping_layers/reshape/
+# https://keras.io/api/layers/reshaping_layers/flatten/
+# model.output_shape
 
 # prediction = tf.reshape(output, [-1])
 # y_flat = tf.reshape(Y, [-1])
