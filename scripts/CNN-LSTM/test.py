@@ -192,7 +192,7 @@ model.add(Dense(units=sequence_length * n_channels, activation='relu'))
 model.add(Dropout(1-keep_prob))
 
 # RESHAPE before LSTM --- # lstm_input = tf.reshape(dence_layer_1, [-1, sequence_length, n_channels])
-model.add(keras.layers.Reshape(target_shape=(batch_size, sequence_length, n_channels)))
+model.add(keras.layers.Reshape(target_shape=(sequence_length, n_channels)))
 
 """ TWO TWO TWO TWO LSTM layers - check dropout and sizes and return_sequences """
 # model.add(LSTM(units=lstm_size, return_sequences=True))
