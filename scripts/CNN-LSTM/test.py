@@ -172,6 +172,7 @@ print("batch_y.shape: ", batch_y.shape)
 model = Sequential()
 # augmentation 
 # normalization 
+
 model.add(Conv1D(filters=18, kernel_size=2, padding='same', activation='relu'))
 model.add(MaxPooling1D(2, strides=2, padding='same'))
 
@@ -190,8 +191,14 @@ model.add(Flatten())
 model.add(Dense(units=sequence_length * n_channels, activation='relu'))
 model.add(Dropout(1-keep_prob))
 
+for layer in model.layers:
+    print(layer.output_shape)
+
 # RESHAPE before LSTM
+model.add(keras.layers.Reshape(target_shape=(-1, sequence_length,n_channels)))
 # lstm_input = tf.reshape(dence_layer_1, [-1, sequence_length, n_channels])
+
+sys.exit()
 """ TWO TWO TWO TWO LSTM layers - check dropout and sizes and return_sequences """
 # model.add(LSTM(units=lstm_size, return_sequences=True))
 model.add(LSTM(units=lstm_size, return_sequences=False))
