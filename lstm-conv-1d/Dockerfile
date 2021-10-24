@@ -12,3 +12,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 # COPY inference.py ./inference.py
 
 # RUN python3 train.py # this will run in the run stage in Jenkins
+
