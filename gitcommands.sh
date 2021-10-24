@@ -1,4 +1,4 @@
 #!/bin/sh
 git add .
-git commit -m 'commit'
+git commit -m '$(date)'
 git push origin master
