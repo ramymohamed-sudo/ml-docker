@@ -11,6 +11,7 @@ from data_processing import data_augmentation, analyse_Data
 from data_processing import compute_rul_of_one_file
 
 import tensorflow as tf
+from tensorflow import keras
 from keras.layers import LSTM, Dropout, MaxPooling1D, Conv1D
 from keras.layers import Activation, Dense, Flatten
 from keras.models import Sequential
