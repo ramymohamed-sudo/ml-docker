@@ -13,8 +13,8 @@ from load_data_2d import *
 
 validation_split=0.2
 epochs = 1000   # 10000
-model_directory='./' # directory to save model history after every epoch 
-
+model_dir='./' # directory to save model history after every epoch 
+model_dir_for_logs_and_h5 =  model_dir+'logs&h5-models/'
 
 df_train = load_train_data()
 df_test = load_test_data()
@@ -37,12 +37,12 @@ class StoreModelHistory(keras.callbacks.Callback):
       logs.setdefault('lr',0)
       logs['lr'] = K.get_value(self.model.optimizer.lr)
 
-    if not (f'model_history_keras_lstm2d_with_scale_epochs_{epochs}.csv' in os.listdir(model_directory)):
-      with open(model_directory+f'model_history_keras_lstm2d_with_scale_epochs_{epochs}.csv','a') as f:
+    if not (f'lstm2d_with_scale_epochs_{epochs}.csv' in os.listdir(model_dir_for_logs_and_h5)):
+      with open(model_dir_for_logs_and_h5+f'lstm2d_with_scale_epochs_{epochs}.csv','a') as f:
         y=csv.DictWriter(f,logs.keys())
         y.writeheader()
 
-    with open(model_directory+f'model_history_keras_lstm2d_with_scale_epochs_{epochs}.csv','a') as f:
+    with open(model_dir_for_logs_and_h5+f'lstm2d_with_scale_epochs_{epochs}.csv','a') as f:
       y=csv.DictWriter(f,logs.keys())
       y.writerow(logs)
 
@@ -109,7 +109,7 @@ print("size before and after prediction",
         train_X.shape, size_before_reshape.shape)
 yhat = model.predict(train_X.reshape(dim1, dim2, dim3))
 print("yhat: ", yhat)
-model.save(f'keras_lstm2d_w_scale_epochs_{epochs}.h5')  # creates a HDF5 file 'my_model.h5'
+model.save(model_dir_for_logs_and_h5+f'lstm2d_w_scale_epochs_{epochs}.h5')
 # !tar -zcvf LSTM2d_model_w_scale.tgz LSTM2d_model_w_scale.h5
 # !ls -l
 

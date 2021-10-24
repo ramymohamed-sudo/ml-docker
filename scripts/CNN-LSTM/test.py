@@ -36,10 +36,11 @@ learning_rate = 0.001  # 0.0001
 epochs = 2  # 5000
 
 # Paths to data
-model_directory='./' # directory to save model history after every epoch 
+model_dir='./' # directory to save model history after every epoch 
 file_path = './CMAPSSData/'
-if not ('CMAPSSData' in os.listdir(model_directory)):
-    file_path = '../CMAPSSData/'
+if not ('CMAPSSData' in os.listdir(model_dir)):
+    file_path = './scripts/CMAPSSData/'
+
 
 train_FD001_path = file_path+'train_FD001.txt'
 train_FD002_path = file_path+'train_FD002.txt'
