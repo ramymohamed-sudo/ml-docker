@@ -12,7 +12,7 @@ import os
 from load_data import *
 
 validation_split=0.2
-epochs = 1000   # 10000
+epochs = 2   # 10000
 model_dir='./' # directory to save model history after every epoch 
 model_dir_for_logs_and_h5 =  model_dir+'logs&h5-models/'
 

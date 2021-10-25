@@ -27,20 +27,26 @@ sequence_length = 100  # Number of steps
 n_channels = 24
 keep_prob = 0.8
 
-# For LSTM
+
 lstm_size = n_channels * 3  # 3 times the amount of channels
 num_layers = 2  # 2  # Number of layers
-# Second Dense Layer
-ann_hidden = 50     
-# Optimizer
+ann_hidden = 50     # # Second Dense Layer    
 learning_rate = 0.001  # 0.0001
 epochs = 2  # 5000
+validation_split=0.2
 
 # Paths to data
 model_dir='./' # directory to save model history after every epoch 
 file_path = './CMAPSSData/'
 if not ('CMAPSSData' in os.listdir(model_dir)):
     file_path = './scripts/CMAPSSData/'
+
+
+
+epochs = 1000   # 10000
+model_dir='./' # directory to save model history after every epoch 
+model_dir_for_logs_and_h5 =  model_dir+'logs&h5-models/'
+
 
 
 train_FD001_path = file_path+'train_FD001.txt'
@@ -170,6 +176,29 @@ print("$$$$$$$$$$$$$$$$$")
 print("batch_y.shape: ", batch_y.shape)
 
 
+""" Save the history logs from model.fit() """
+# You can achieve this functionality by creating a class which sub-classes tf.keras.callbacks.Callback 
+# and use the object of that class as callback to model.fit.
+
+class StoreModelHistory(keras.callbacks.Callback):
+#   def __init__(self, name):
+
+  def on_epoch_end(self,batch,logs=None):
+    if ('lr' not in logs.keys()):
+      logs.setdefault('lr',0)
+      logs['lr'] = K.get_value(self.model.optimizer.lr)
+
+    if not (f'lstm_with_scale_epochs_{epochs}.csv' in os.listdir(model_dir_for_logs_and_h5)):
+      with open(model_dir_for_logs_and_h5+f'lstm_with_scale_epochs_{epochs}.csv','a') as f:
+        y=csv.DictWriter(f,logs.keys())
+        y.writeheader()
+
+    with open(model_dir_for_logs_and_h5+f'lstm_with_scale_epochs_{epochs}.csv','a') as f:
+      y=csv.DictWriter(f,logs.keys())
+      y.writerow(logs)
+
+
+
 """ -------------- Keras | Ramy -------------- """
 model = Sequential()    # augmentation  # normalization 
 
@@ -232,13 +261,16 @@ history = model.fit(x_train_all,
                     y_train_all,
                     epochs=epochs,
                     batch_size=batch_size,
-                    verbose=2, shuffle=False)
+                    validation_split=validation_split,
+                    verbose=2, shuffle=False,
+                    callbacks=[StoreModelHistory()])
 print(model.summary())
+
 
 print("Hello here")
 
-for layer in model.layers:
-    print(layer.output_shape)
+# for layer in model.layers:
+#     print(layer.output_shape)
 
 sys.exit()
 
