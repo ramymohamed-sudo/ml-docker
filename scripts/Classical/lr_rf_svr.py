@@ -22,6 +22,10 @@ from load_data import *
 
 test_size=0.2
 
+model_dir_for_logs_and_h5 = model_dir+'logs&h5-models/'
+if not ('logs&h5-models' in os.listdir(model_dir)):
+    model_dir_for_logs_and_h5 = './scripts/logs&h5-models/'
+
 
 df_train = load_train_data()
 df_test = load_test_data()

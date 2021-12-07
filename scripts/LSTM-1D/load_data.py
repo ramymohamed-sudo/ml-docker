@@ -24,8 +24,8 @@ start_time = datetime.datetime.now()
 RUL_cap = 130
 
 
-model_dir='./' # directory to save model history after every epoch 
-file_path = './CMAPSSData/'
+model_dir='../' # directory to save model history after every epoch 
+file_path = model_dir+'CMAPSSData/'
 if not ('CMAPSSData' in os.listdir(model_dir)):
     file_path = './scripts/CMAPSSData/'
 

@@ -36,11 +36,14 @@ epochs = 2  # 5000
 validation_split=0.2
 
 # Paths to data
-model_dir='./' # directory to save model history after every epoch 
-file_path = './CMAPSSData/'
+file_path = model_dir + 'CMAPSSData/'
 if not ('CMAPSSData' in os.listdir(model_dir)):
     file_path = './scripts/CMAPSSData/'
 
+model_dir='../' # directory to save model history after every epoch 
+model_dir_for_logs_and_h5 = model_dir+'logs&h5-models/'
+if not ('logs&h5-models' in os.listdir(model_dir)):
+    model_dir_for_logs_and_h5 = './scripts/logs&h5-models/'
 
 
 epochs = 1000   # 10000

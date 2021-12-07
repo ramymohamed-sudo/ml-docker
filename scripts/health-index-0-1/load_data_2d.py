@@ -15,7 +15,6 @@ from numpy import concatenate
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import MinMaxScaler
 
-from load_data import load_data
 
 pd.options.mode.chained_assignment = None
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
@@ -23,10 +22,12 @@ start_time = datetime.datetime.now()
 RUL_cap = 130
 
 
-model_dir='./' # directory to save model history after every epoch 
-file_path = './CMAPSSData/'
+model_dir='../' 
+file_path = model_dir + 'CMAPSSData/'
 if not ('CMAPSSData' in os.listdir(model_dir)):
     file_path = './scripts/CMAPSSData/'
+
+
 
 train_file = file_path+'train_FD001.txt'
 test_file = file_path+'test_FD001.txt'
@@ -51,6 +52,21 @@ def series_to_supervised(data, window_size, dropnan=True):
         agg.dropna(inplace=True)
     return agg
 
+
+def load_data(data_path):
+    operational_settings = ['os{}'.format(i + 1) for i in range(3)]
+    sensor_columns = ['sm{}'.format(i + 1) for i in range(26)]
+    cols = ['engine_no', 'cycle'] + operational_settings + sensor_columns
+    data = pd.read_csv(data_path, sep=' ', header=None, names=cols)
+    data = data.drop(cols[-5:], axis=1)
+    # cols = ['engine_no', 'cycle', 'os1', 'os2', 'os3', 'sm1',....., 'sm21']
+    # data['index'] = data.index
+    # data.index = data['index']
+    # data['time'] = pd.date_range('1/1/2000', periods=data.shape[0], freq='600s')
+    # print(f'Loaded data with {data.shape[0]} Recordings')    # Recordings\n{} Engines
+    # print(f"Number of engines {len(data['engine_no'].unique())}")
+    # print('21 Sensor Measurements and 3 Operational Settings')
+    return data
 
 def load_train_data():
     training_data = load_data(train_file)

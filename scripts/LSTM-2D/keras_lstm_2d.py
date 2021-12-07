@@ -9,13 +9,16 @@ from keras.models import Sequential
 from keras.layers import LSTM, Dense, Dropout
 import csv
 import os 
-from load_data import *
+import sys
+from load_data_2d import *     
 
 validation_split=0.2
-epochs = 2   # 10000
-model_dir='./' # directory to save model history after every epoch 
-model_dir_for_logs_and_h5 =  model_dir+'logs&h5-models/'
+epochs = 1   # 10000
 
+model_dir='../' # directory to save model history after every epoch 
+model_dir_for_logs_and_h5 = model_dir+'logs&h5-models/'
+if not ('logs&h5-models' in os.listdir(model_dir)):
+    model_dir_for_logs_and_h5 = './scripts/logs&h5-models/'
 
 df_train = load_train_data()
 df_test = load_test_data()
@@ -38,20 +41,22 @@ class StoreModelHistory(keras.callbacks.Callback):
       logs.setdefault('lr',0)
       logs['lr'] = K.get_value(self.model.optimizer.lr)
 
-    if not (f'lstm_with_scale_epochs_{epochs}.csv' in os.listdir(model_dir_for_logs_and_h5)):
-      with open(model_dir_for_logs_and_h5+f'lstm_with_scale_epochs_{epochs}.csv','a') as f:
+    if not (f'lstm2d_with_scale_epochs_{epochs}.csv' in os.listdir(model_dir_for_logs_and_h5)):
+      with open(model_dir_for_logs_and_h5+f'lstm2d_with_scale_epochs_{epochs}.csv','a') as f:
         y=csv.DictWriter(f,logs.keys())
         y.writeheader()
 
-    with open(model_dir_for_logs_and_h5+f'lstm_with_scale_epochs_{epochs}.csv','a') as f:
+    with open(model_dir_for_logs_and_h5+f'lstm2d_with_scale_epochs_{epochs}.csv','a') as f:
       y=csv.DictWriter(f,logs.keys())
       y.writerow(logs)
 
 
+
 """ 7. Train a LSTM model """
 dim1 = train_X.shape[0]
-dim2 = 1    # for 2-D approach this value is 1
-dim3 = int(train_X.shape[1]/dim2)
+dim2 = train_X.shape[1]
+dim3 = train_X.shape[2]
+print(f" dim1 is {dim1}\n dim2 is {dim2}\n dim3 is {dim3}")
 
 tf.keras.backend.clear_session()
 model = Sequential()
@@ -71,7 +76,7 @@ history = model.fit(train_X.reshape(dim1, dim2, dim3),
                     validation_split=validation_split, verbose=2, shuffle=True,
                     callbacks=[StoreModelHistory()])
 print(model.summary())
-
+sys.exit()
 
 
 
@@ -108,7 +113,7 @@ print("size before and after prediction",
         train_X.shape, size_before_reshape.shape)
 yhat = model.predict(train_X.reshape(dim1, dim2, dim3))
 print("yhat: ", yhat)
-model.save(model_dir_for_logs_and_h5+f'lstm_w_scale_epochs_{epochs}.h5')  # creates a HDF5 file 'my_model.h5'
-# !tar -zcvf LSTM_model_w_scale.tgz LSTM_model_w_scale.h5
+model.save(model_dir_for_logs_and_h5+f'lstm2d_w_scale_epochs_{epochs}.h5')
+# !tar -zcvf LSTM2d_model_w_scale.tgz LSTM2d_model_w_scale.h5
 # !ls -l
 

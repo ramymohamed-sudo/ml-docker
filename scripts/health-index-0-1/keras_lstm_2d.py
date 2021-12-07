@@ -13,8 +13,6 @@ from load_data_2d import *
 
 validation_split=0.2
 epochs = 1000   # 10000
-model_dir='./' # directory to save model history after every epoch 
-model_dir_for_logs_and_h5 =  model_dir+'logs&h5-models/'
 
 df_train = load_train_data()
 df_test = load_test_data()
@@ -23,6 +21,10 @@ train_y = df_train['Y'].values.astype('float32')
 test_y = df_test['Y'].values.astype('float32')
 
 
+model_dir='../' # directory to save model history after every epoch 
+model_dir_for_logs_and_h5 = model_dir+'logs&h5-models/'
+if not ('logs&h5-models' in os.listdir(model_dir)):
+    model_dir_for_logs_and_h5 = './scripts/logs&h5-models/'
 
 """ Save the history logs from model.fit() """
 # You can achieve this functionality by creating a class which sub-classes tf.keras.callbacks.Callback 

@@ -1,5 +1,5 @@
 
-https://www.jenkins.io/doc/book/pipeline/
+// https://www.jenkins.io/doc/book/pipeline/
 
 node{
 
@@ -32,7 +32,7 @@ node{
         customImage.inside {
         sh 'ls'
         sh 'echo Hello Classical Regression'
-        sh 'python3 ./scripts/lr_rf_svr.py'
+        sh 'python3 ./scripts/Classical/lr_rf_svr.py'
         
     }
     }
@@ -48,6 +48,6 @@ node{
 
     
 }
-    
+
 
 
